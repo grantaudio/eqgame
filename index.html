@@ -1,1 +1,105 @@
-
+<head>
+	<title>EQGuesser</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="css.css" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@2.2.3/dist/chartjs-plugin-dragdata.min.js"></script>
+	<script src="js.js"></script>
+</head>
+<body class="lexend-400">
+	<div id="bodycopy"></div>
+	<div id="header">
+		EQGuesser
+		<div id="gamedisplay">Menu</div>
+		<button id="theme">Change Theme</button>
+	</div>
+	<div id="fader"></div>
+	<!-- incredibly misleading name -->
+	<div id="selectmenu">
+		<div id="actualmenu">
+			<div class="menucontainer">
+				<div class="menutitle">Bands</div>
+				<div id="bandesc">How many EQ bands are active and must be guessed.</div>
+				<div class="buttoncontainer">
+					<button id="1band" class="band green">1 Band</button>
+					<button id="3band" class="band">3 Band</button>
+					<button id="7band" class="band">5 Band</button>
+					<button id="randband" class="band">Random</button>
+				</div>
+			</div>
+			<div class="menucontainer">
+				<div class="menutitle">Tolerance</div>
+				<div id="tolerancedesc">How lenient scoring would be.</div>
+				<div class="buttoncontainer">
+					<button id="lowtolerance" class="tolerance green">Low</button>
+					<button id="mediumtolerance" class="tolerance">Medium</button>
+					<button id="hightolerance" class="tolerance">High</button>
+					<button id="scaledtolerance" class="tolerance">Decreasing</button>
+					<button id="adjustedtolerance" class="tolerance">Adjusted</button>
+				</div>
+			</div>
+			<div class="menucontainer">
+				<div class="menutitle">Gain</div>
+				<div id="gaindesc">Sets the possible range for the filter gain.</div>
+				<div class="buttoncontainer">
+					<button id="randomgain" class="gain green">Random (0-12dB)</button>
+					<button id="lowgain" class="gain">Low (3-12dB)</button>
+					<button id="mediumgain" class="gain">Medium (6-12dB)</button>
+					<button id="highgain" class="gain">High (9-12dB)</button>
+				</div>
+			</div>
+			<div class="menucontainer">
+				<div class="menutitle">Mode</div>
+				<div id="modedesc">Different types of modes to play.</div>
+				<div class="buttoncontainer">
+					<button id="1lives" class="mode green">Lives (1)</button>
+					<button id="3lives" class="mode">Lives (3)</button>
+					<button id="5lives" class="mode">Lives (5)</button>
+					<button id="10rounds" class="mode">10 Rounds</button>
+					<button id="25rounds" class="mode">25 Rounds</button>
+					<button id="25rounds" class="mode">Endless</button>
+				</div>
+			</div>
+			<div class="menucontainer">
+				<div class="menutitle">Misc</div>
+				<div id="miscdesc">Other settings.</div>
+				<div class="buttoncontainer">
+					<button id="pinknoise" class="misc green">Pink Noise</button>
+					<button id="brownnoise" class="misc">Brown Noise</button>
+					<button id="whitenoise" class="misc">White Noise</button>
+					<button id="showamount" class="misc">Show Settings</button>
+					<button id="statistics" class="misc">Show Statistics</button>
+				</div>
+			</div>
+			<div class="menucontainer2">
+				<div>You can press Enter to submit, Space to toggle bypass, and 1-5 to switch between bands.</div>
+				<button id="play">Start!</button>
+			</div>
+		</div>
+	</div>
+	<div id="game">
+		<div id="topcontainer">
+			<div id="audiostatus">Audio file is being decoded... Please wait...</div>
+			<button id="bypassfilter">Playing: Sound to Guess</button>
+			<button id="submit">SUBMIT GUESS</button>
+		</div>
+		<div id="midcontainer">
+			<div id="statisticsdisplay">
+				Round #1
+				<span id="fpsdisplay"></span>
+			</div>
+			<div id="filterdisplay">
+				<canvas id="eqgraph"></canvas>
+			</div>
+			<div id="settings"></div>
+		</div>
+		<div id="qslider">
+			<div id="qtitle">Q Factor for Band 1:</div>
+			<input type="range" min="0.1" max="10" value="1" step="0.1" class="slider" id="qrange" />
+			<div id="qoutput">1</div>
+		</div>
+		<div id="bandselect"></div>
+	</div>
+</body>
