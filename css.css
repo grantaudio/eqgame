@@ -193,7 +193,7 @@ input[type="range"]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	margin-top: -0.6em;
-	background: url("assets/img/fader.png");
+	background: url("/eqgame/assets/img/fader.png");
 	background-size: 5em 2em;
 	background-color: var(--light1);
 	background-origin: border-box;
@@ -204,7 +204,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 input[type="range"]::-moz-range-thumb {
 	margin-top: -0.6em;
-	background: url("assets/img/fader.png");
+	background: url("/eqgame/assets/img/fader.png");
 	background-size: 5em 2em;
 	background-color: var(--light1);
 	background-origin: border-box;

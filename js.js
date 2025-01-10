@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		audio = new AudioContext();
 		let track;
 		let othertrack;
-		fetch(["/assets/audio/pink_noise.wav", "/assets/audio/brown_noise.wav", "/assets/audio/white_noise.wav"][noisemode]) //grab audio file
+		fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //grab audio file
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => audio.decodeAudioData(buffer)) //decode data
 			.then((decodedData) => {
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				document.getElementById("audiostatus").innerHTML = "Audio is playing! (" + (date2 - date1) + "ms to load)";
 			});
 		bypassedaudio = new AudioContext();
-		fetch(["/assets/audio/pink_noise.wav", "/assets/audio/brown_noise.wav", "/assets/audio/white_noise.wav"][noisemode]) //same thing as above
+		fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing as above
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => bypassedaudio.decodeAudioData(buffer))
 			.then((decodedData) => {
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			audio = new AudioContext();
 			let track;
 			let othertrack;
-			fetch(["/assets/audio/pink_noise.wav", "/assets/audio/brown_noise.wav", "/assets/audio/white_noise.wav"][noisemode]) //same thing
+			fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing
 				.then((response) => response.arrayBuffer())
 				.then((buffer) => audio.decodeAudioData(buffer))
 				.then((decodedData) => {
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					document.getElementById("audiostatus").innerHTML = "Audio is playing! (" + (date2 - date1) + "ms to load)";
 				});
 			bypassedaudio = new AudioContext();
-			fetch(["/assets/audio/pink_noise.wav", "/assets/audio/brown_noise.wav", "/assets/audio/white_noise.wav"][noisemode]) //same thing
+			fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing
 				.then((response) => response.arrayBuffer())
 				.then((buffer) => bypassedaudio.decodeAudioData(buffer))
 				.then((decodedData) => {
