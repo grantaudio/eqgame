@@ -31,7 +31,7 @@ body {
 	padding: 0;
 	background-color: var(--light3);
 	overflow: hidden;
-	background-image: url("./assets/img/a.png");
+	background-image: url("assets/img/a.png");
 	background-size: 70px 70px;
 	opacity: 0.075;
 	z-index: -2;
@@ -193,7 +193,7 @@ input[type="range"]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	margin-top: -0.6em;
-	background: url("./assets/img/fader.png");
+	background: url("assets/img/fader.png");
 	background-size: 5em 2em;
 	background-color: var(--light1);
 	background-origin: border-box;
@@ -204,7 +204,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 input[type="range"]::-moz-range-thumb {
 	margin-top: -0.6em;
-	background: url("./assets/img/fader.png");
+	background: url("assets/img/fader.png");
 	background-size: 5em 2em;
 	background-color: var(--light1);
 	background-origin: border-box;
