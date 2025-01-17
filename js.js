@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		audio = new AudioContext();
 		let track;
 		let othertrack;
-		fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //grab audio file
+		fetch(["assets/audio/pink_noise.wav", "assets/audio/brown_noise.wav", "assets/audio/white_noise.wav"][noisemode]) //grab audio file
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => audio.decodeAudioData(buffer)) //decode data
 			.then((decodedData) => {
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				document.getElementById("audiostatus").innerHTML = "Audio is playing! (" + (date2 - date1) + "ms to load)";
 			});
 		bypassedaudio = new AudioContext();
-		fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing as above
+		fetch(["assets/audio/pink_noise.wav", "assets/audio/brown_noise.wav", "assets/audio/white_noise.wav"][noisemode]) //same thing as above
 			.then((response) => response.arrayBuffer())
 			.then((buffer) => bypassedaudio.decodeAudioData(buffer))
 			.then((decodedData) => {
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			audio = new AudioContext();
 			let track;
 			let othertrack;
-			fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing
+			fetch(["assets/audio/pink_noise.wav", "assets/audio/brown_noise.wav", "assets/audio/white_noise.wav"][noisemode]) //same thing
 				.then((response) => response.arrayBuffer())
 				.then((buffer) => audio.decodeAudioData(buffer))
 				.then((decodedData) => {
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					document.getElementById("audiostatus").innerHTML = "Audio is playing! (" + (date2 - date1) + "ms to load)";
 				});
 			bypassedaudio = new AudioContext();
-			fetch(["/eqgame/assets/audio/pink_noise.wav", "/eqgame/assets/audio/brown_noise.wav", "/eqgame/assets/audio/white_noise.wav"][noisemode]) //same thing
+			fetch(["assets/audio/pink_noise.wav", "assets/audio/brown_noise.wav", "assets/audio/white_noise.wav"][noisemode]) //same thing
 				.then((response) => response.arrayBuffer())
 				.then((buffer) => bypassedaudio.decodeAudioData(buffer))
 				.then((decodedData) => {
@@ -465,9 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function tick() { //fps tracking for performance issues
 		let fps2 = Date.now();
 		fps = fps2 - fps1;
-		try {
-			document.getElementById("fpsdisplay").innerHTML = "FPS: " + (1000 / fps).toFixed(4) + " (" + fps + "ms)";
-		} catch (e) {}
+		document.getElementById("fpsdisplay").innerHTML = "FPS: " + (1000 / fps).toFixed(4) + " (" + fps + "ms)";
 		fps1 = fps2;
 		window.requestAnimationFrame(tick);
 	}
@@ -557,6 +555,53 @@ document.addEventListener("DOMContentLoaded", () => {
 					these two give us a near-perfect repersentation of a peaking eq curve
 					near 3db theres a noticable jump in the graph but it works perfectly otherwise
 				  */
+		generateData(equation, Math.log10(20), Math.log10(20000), 100);
+	}
+	function generate2(i) { //generate but for correct eq curves
+	let equation = //see the reference.png for a readable version of the equation
+			Math.abs(correctq[i]) > 3
+				? "" +
+				  correctgain[i] +
+				  " * Math.pow(Math.E, (-1 * Math.pow(Math.log(x) - Math.log( " +
+				  correctfreq[i] +
+				  " ), 2)) / ( " +
+				  correctfreq[i] +
+				  " / (Math.pow(Math.E, Math.sqrt(-1 * " +
+				  correctq[i] +
+				  " * Math.log(( " +
+				  correctgain[i] +
+				  " " +
+				  (correctgain[i] > 0 ? "-" : "+") +
+				  " 3) / " +
+				  correctgain[i] +
+				  " )) + Math.log( " +
+				  correctfreq[i] +
+				  " )) - Math.pow(Math.E, -1 * Math.sqrt(-1 * " +
+				  correctq[i] +
+				  " * Math.log(( " +
+				  correctgain[i] +
+				  " " +
+				  (correctgain[i] > 0 ? "-" : "+") +
+				  " 3) / " +
+				  correctgain[i] +
+				  " )) + Math.log( " +
+				  correctfreq[i] +
+				  " )))))"
+				: "" +
+				correctgain[i] +
+				  " * Math.pow(Math.E, (-1 * Math.pow(Math.log(x) - Math.log( " +
+				  correctfreq[i] +
+				  " ), 2)) / ( " +
+				  correctfreq[i] +
+				  " / (Math.pow(Math.E, Math.sqrt(-1 * " +
+				  correctq[i] +
+				  " * Math.log(0.065)) + Math.log( " +
+				  correctfreq[i] +
+				  " )) - Math.pow(Math.E, -1 * Math.sqrt(-1 * " +
+				  correctq[i] +
+				  " * Math.log(0.065)) + Math.log( " +
+				  correctfreq[i] +
+				  " )))))";
 		generateData(equation, Math.log10(20), Math.log10(20000), 100);
 	}
 	function updatechart(i) { //similar to generate, but doesn't generate x values
@@ -722,7 +767,18 @@ document.addEventListener("DOMContentLoaded", () => {
 			let frequencyscore = [];
 			let gainscore = [];
 			let qscore = [];
-			for (let i = 0; i < filterlist.length; i++) {
+			let temparr = [];
+			filterlist.sort((a, b) => {a.frequency.value - b.frequency.value}); //sort eq filters by frequency for accurate scores
+			for (let i = 0; i < correctfreq.length; i++) { //pack correct eqs into a list
+				temparr.push({freq: correctfreq[i], gain: correctgain[i], q: correctq[i]});
+			}
+			temparr.sort((a, b) => {a.freq - b.freq}); //sort temp array
+			for (let i = 0; i < correctfreq.length; i++) { //unpack correct eqs into individual lists
+				correctfreq[i] = temparr[i].freq;
+				correctgain[i] = temparr[i].gain;
+				correctq[i] = temparr[i].q;
+			}
+			for (let i = 0; i < filterlist.length; i++) { //begin comparing
 				let e = filterlist[i];
 				frequencydifference.push(e.frequency.value - correctfreq[i]);
 				gaindifference.push(e.gain.value - correctgain[i]);
@@ -733,6 +789,23 @@ document.addEventListener("DOMContentLoaded", () => {
 				qscore.push(2 / (1 + Math.pow(Math.E, 2 * Math.abs(Math.log10(correctq[i]) - Math.log10(e.Q.value)))));
 				averagescore += frequencyscore[i] + gainscore[i] + qscore[i];
 			}
+			for (let i = 0; i < correctfreq.length; i++) {
+				xValues = [];
+				yValues = [];
+				generate2(i);
+				chart.data.datasets.push({
+					type: "line",
+					fill: true,
+					backgroundColor: "rgba(0,0,0,0.5)",
+					pointRadius: 0,
+					borderColor: "rgba(0,0,0,1)",
+					data: yValues,
+					label: xValues,
+					dragData: false,
+				});
+			}
+			chart.data.labels = xValues;
+			chart.update("none");
 			averagescore /= filterlist.length * 3;
 			if (averagescore >= tolerance) { //handle winning and losing
 				if (tolerancemode === 4) tolerance += 0.05;
@@ -741,7 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				wins++;
 				setTimeout(() => {
 					document.body.classList.remove("green2");
-				}, 2000);
+				}, 3000);
 			} else {
 				if (tolerancemode === 4) tolerance -= 0.05;
 				if (tolerancemode === 5) tolerance += 0.05;
@@ -750,7 +823,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				loses++;
 				setTimeout(() => {
 					document.body.classList.remove("red");
-				}, 2000);
+				}, 3000);
 			}
 			score += Math.round(averagescore * 1500);
 			rounds++;
@@ -790,14 +863,14 @@ document.addEventListener("DOMContentLoaded", () => {
 				document.getElementById("fader").style.display = "block";
 				audio.close();
 				bypassedaudio.close();
-				fade4(0, 1, 0, 150);
+				setTimeout(fade4, 3000, 0, 1, 0, 150);
 				return;
 			}
-			restart();
+			setTimeout(restart, 3000);
 			delay = false; //delay for submitting again
 			setTimeout(() => {
 				delay = true;
-			}, 2500);
+			}, 5000);
 			if (modemode <= 2) document.getElementById("gamedisplay").innerHTML = "Lives: " + lives;
 			if (modemode >= 3) document.getElementById("gamedisplay").innerHTML = "Score: " + score;
 		}
